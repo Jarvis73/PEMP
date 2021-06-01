@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <title>Viewer</title>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/zui/1.9.2/css/zui.min.css">
+    <style>
+        body {
+            margin-left: 20px;
+            margin-top 10px;
+        }
+        img {
+            max-width: 100%;
+            max-height: 90%;
+            display: block;
+            margin: auto;
+        }
+        .card {
+            height: 350px;
+            font-size: medium;
+            text-align: center;
+        }
+    </style>
+</head>
+<body style="margin-top: 20px;">
+    <!-- 按钮组 -->
+    <div style="margin-bottom: 20px;">
+        <div class="btn-group">
+            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+            Choice Experiments <span class="caret"></span>
+            </button>
+            <ul id="exp_list" class="dropdown-menu" role="menu">
+            </ul>
+        </div>
+        <span class="label" id="exp_name" style="font-size: medium; margin-left: 20px;"></span>
+    </div>
+
+    <!-- 内容 -->
+    <div class="cards">
+        <div class="col-md-3 col-sm-6 col-lg-2">
+            <a class="card">
+                <img id="sup_img1" src="" />
+                <div class="card-heading">Support Image 1<span id="sup_img_name1" class="label label-warning"></span>
+                <span id="sup_cls_id" class="label label-info"></span></div>
+            </a>
+        </div>
+        <div class="col-md-3 col-sm-6 col-lg-2">
+            <a class="card">
+                <img id="sup_msk1" src="" />
+                <div class="card-heading">Support Segmentation 1</div>
+            </a>
+        </div>
+        <div class="col-md-3 col-sm-6 col-lg-2">
+            <a class="card">
+                <img id="sup_img2" src="" />
+                <div class="card-heading">Support Image 2<span id="sup_img_name2" class="label label-warning"></span></div>
+            </a>
+        </div>
+        <div class="col-md-3 col-sm-6 col-lg-2">
+            <a class="card">
+                <img id="sup_msk2" src="" />
+                <div class="card-heading">Support Segmentation 2</div>
+            </a>
+        </div>
+        <div class="col-md-3 col-sm-6 col-lg-2">
+            <a class="card">
+                <img id="sup_img3" src="" />
+                <div class="card-heading">Support Image 3<span id="sup_img_name3" class="label label-warning"></span></div>
+            </a>
+        </div>
+        <div class="col-md-3 col-sm-6 col-lg-2">
+            <a class="card">
+                <img id="sup_msk3" src="" />
+                <div class="card-heading">Support Segmentation 3</div>
+            </a>
+        </div>
+        <div class="col-md-3 col-sm-6 col-lg-2">
+            <a class="card">
+                <img id="sup_img4" src="" />
+                <div class="card-heading">Support Image 4<span id="sup_img_name4" class="label label-warning"></span></div>
+            </a>
+        </div>
+        <div class="col-md-3 col-sm-6 col-lg-2">
+            <a class="card">
+                <img id="sup_msk4" src="" />
+                <div class="card-heading">Support Segmentation 4</div>
+            </a>
+        </div>
+        <div class="col-md-3 col-sm-6 col-lg-2">
+            <a class="card">
+                <img id="sup_img5" src="" />
+                <div class="card-heading">Support Image 5<span id="sup_img_name5" class="label label-warning"></span></div>
+            </a>
+        </div>
+        <div class="col-md-3 col-sm-6 col-lg-2">
+            <a class="card">
+                <img id="sup_msk5" src="" />
+                <div class="card-heading">Support Segmentation 5</div>
+            </a>
+        </div>
+    </div>
+
+    <div class="cards">
+        <div class="col-md-4 col-sm-6 col-lg-2">
+            <a class="card">
+                <img id="qry_img" src="" />
+                <div class="card-heading">Query Image <span id="qry_img_name" class="label label-warning"></span>
+                <span id="qry_cls_id" class="label label-info"></span></div>
+            </a>
+        </div>
+
+        <div class="col-md-4 col-sm-6 col-lg-2">
+            <a class="card">
+                <img id="qry_msk" src="" />
+                <div class="card-heading">Query Segmentation</div>
+            </a>
+        </div>
+        <div class="col-md-4 col-sm-6 col-lg-2">
+            <a class="card">
+                <img id="pred" src="" />
+                <div class="card-heading">Query Prediction <span id="accuracy" class="label label-warning"></span></div>
+            </a>
+        </div>
+        <div class="col-md-4 col-sm-6 col-lg-2">
+            <a class="card">
+                <img id="qry_colored" src="" />
+                <div class="card-heading">Colored Prediction</div>
+            </a>
+        </div>
+    </div>
+
+    <div style="text-align: right; margin-right: 1cm">
+        <span class="label" style="font-size: large; background-color: rgb(100, 11, 12)">FG-1</span>
+        <span class="label" style="font-size: large; background-color: rgb(193, 32, 38)">FG-2</span>
+        <span class="label" style="font-size: large; background-color: rgb(247, 178, 78)">FG-3</span>
+        <span class="label" style="font-size: large; background-color: rgb(25, 70, 147)">BG-1</span>
+        <span class="label" style="font-size: large; background-color: rgb(30, 116, 179)">BG-2</span>
+        <span class="label" style="font-size: large; background-color: rgb(112, 172, 207)">BG-3</span>
+    </div>
+
+    <div style="text-align: center">
+        <ul id="myPager" class="pager" data-page="1"
+            data-elements="first_icon,prev,next,last_icon,goto,total_page_text"></ul>
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/zui/1.9.2/lib/jquery/jquery.js" charset="utf-8"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/zui/1.9.2/js/zui.min.js" charset="utf-8"></script>
+    <script type="text/javascript">
+        let all_exps = {};
+        let all_samples = {};
+        let cur_exp = "";
+        let page = 1;
+
+        function load_image(name) {
+            $.ajax({
+                url: `${cur_exp}/${name}/data.json`,
+                type: "GET",
+                cache: false,
+                dataType: "json",
+                success: function(data) {
+                    let cls_name = data["cls_name"];
+                    let cls_id = data["cls_id"];
+                    let sup_name1 = data["sup1"];
+                    let sup_name2 = data["sup2"];
+                    let sup_name3 = data["sup3"];
+                    let sup_name4 = data["sup4"];
+                    let sup_name5 = data["sup5"];
+                    let qry_name = data["qry"];
+                    $('#sup_img1').attr("src", `${cur_exp}/${name}/${cls_name}_sup_img_${sup_name1}.jpg`);
+                    $('#sup_msk1').attr("src", `${cur_exp}/${name}/${cls_name}_sup_msk_${sup_name1}.png`);
+                    $("#sup_img_name1").text(sup_name1);
+                    $('#sup_img2').attr("src", `${cur_exp}/${name}/${cls_name}_sup_img_${sup_name2}.jpg`);
+                    $('#sup_msk2').attr("src", `${cur_exp}/${name}/${cls_name}_sup_msk_${sup_name2}.png`);
+                    $("#sup_img_name2").text(sup_name2);
+                    $('#sup_img3').attr("src", `${cur_exp}/${name}/${cls_name}_sup_img_${sup_name3}.jpg`);
+                    $('#sup_msk3').attr("src", `${cur_exp}/${name}/${cls_name}_sup_msk_${sup_name3}.png`);
+                    $("#sup_img_name3").text(sup_name3);
+                    $('#sup_img4').attr("src", `${cur_exp}/${name}/${cls_name}_sup_img_${sup_name4}.jpg`);
+                    $('#sup_msk4').attr("src", `${cur_exp}/${name}/${cls_name}_sup_msk_${sup_name4}.png`);
+                    $("#sup_img_name4").text(sup_name4);
+                    $('#sup_img5').attr("src", `${cur_exp}/${name}/${cls_name}_sup_img_${sup_name5}.jpg`);
+                    $('#sup_msk5').attr("src", `${cur_exp}/${name}/${cls_name}_sup_msk_${sup_name5}.png`);
+                    $("#sup_img_name5").text(sup_name5);
+                    $('#sup_cls_id').text(`${cls_id}: ${cls_name}`);
+                    $('#qry_img').attr("src", `${cur_exp}/${name}/${cls_name}_qry_img_${qry_name}.jpg`);
+                    $('#qry_msk').attr("src", `${cur_exp}/${name}/${cls_name}_qry_msk_${qry_name}.png`);
+                    $('#pred').attr("src", `${cur_exp}/${name}/${cls_name}_qry_pred_${qry_name}.png`);
+                    $('#qry_colored').attr("src", `${cur_exp}/${name}/${cls_name}_qry_color_${qry_name}.png`);
+                    $('#qry_cls_id').text(`${cls_id}: ${cls_name}`);
+                    $("#accuracy").text(data["acc"]);
+                    $("#qry_img_name").text(qry_name);
+                }
+            })
+        }
+
+        function ask_for_data_by_exp(name){
+            $.ajax({
+                url: `/api/samples?exp=${name}`,
+                type: "GET",
+                dataType: "json",
+                success: function(data) {
+                    all_samples = {...data}
+                    $('#myPager').pager({
+                        page: page,
+                        recTotal: data.length,
+                        recPerPage: 1,
+                        onPageChange: function(state, oldState) {
+                            if (state.page !== oldState.page) {
+                                page = state.page;
+                                load_image(all_samples[state.page - 1]);
+                            }
+                        }
+                    });
+                    load_image(data[page - 1]);
+                    let myPager = $('#myPager').data('zui.pager');
+                    myPager.set(null, data.length, 1);
+                }
+            });
+        }
+
+        function change_exp(name) {
+            $("#exp_name").text(name);
+            cur_exp = name;
+            ask_for_data_by_exp(name);
+        }
+
+        // Read experiment list
+        (function(){
+            $.ajax({
+                url: "/api/experiments",
+                type: "GET",
+                dataType: "json",
+                success: function(data) {
+                    all_exps = {...data}
+                    for (let eid in all_exps)
+                    {
+                        $("#exp_list").append(`<li><a href="javascript:void(0);" onclick="change_exp(this.innerHTML)">${all_exps[eid]}</a></li>`);
+                        if (eid == 0)
+                        {
+                            change_exp(all_exps[0]);
+                        }
+                    }
+                }
+            })
+        }());
+    </script>
+</body>
+</html>

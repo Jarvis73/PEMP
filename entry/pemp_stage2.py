@@ -121,6 +121,7 @@ def train(_run, _config,
 
     _, data_loader, _ = datasets.load(cfg.data, "train", split, shot, query, logger=logger, first=True)
     _, data_loader_val, num_classes = datasets.load(cfg.data, "eval_online", split, shot, query, logger=logger)
+    logger.info(f"{' ' * 10} ==> Settings: split={split} shot={shot} stage=2")
 
     stage1 = PriorNet(logger).cuda().eval()   # Make sure the eval model
     stage1_ckpt, _ = misc.find_snapshot(cfg, s1.id, s1.ckpt)
@@ -185,6 +186,7 @@ def test(_run, _config,
     misc.set_seed(seed)
 
     _, data_loader, num_classes = datasets.load(cfg.data, "test", split, shot, query, logger=logger, first=True)
+    logger.info(f"{' ' * 10} ==> Settings: split={split} shot={shot} stage=2")
 
     stage1 = PriorNet(logger).cuda().eval()   # Make sure the eval model
     stage1_ckpt, _ = misc.find_snapshot(cfg, s1.id, s1.ckpt)

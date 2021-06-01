@@ -24,7 +24,7 @@ source activate torch
 conda install numpy=1.19.1
 conda install pytorch=1.6.0 torchvision=0.7.0 cudatoolkit=10.1 -c pytorch 
 conda install tqdm scipy pymongo opencv
-pip install sacred==0.8.2 dropblock==0.3.0
+pip install sacred==0.8.2 dropblock==0.3.0 pycocotools
 ```
 
 #### 1.2 Manage Experiments
@@ -122,23 +122,46 @@ PYTHONPATH=./ python entry/pemp_stage1.py print_config
 # bash ./scripts/pemp_stage2.sh test 0 [split=0] [shot=1] [data.dataset=PASCAL] [s1.id=1] [exp_id=5] [-u] [-p]
 
 # Step1: Training/Testing PEMP_Stage1
-bash ./scripts/pemp_stage1.sh train 0
-bash ./scripts/pemp_stage1.sh test 0 exp_id=<S1_ID>
+bash ./scripts/pemp_stage1.sh train 0 split=0
+bash ./scripts/pemp_stage1.sh test 0 split=0 exp_id=<S1_ID>
 
 # Step2: Training/Testing PEMP_Stage2
-bash ./scripts/pemp_stage2.sh train 0 s1.id=<S1_ID>
-bash ./scripts/pemp_stage1.sh test 0 s1.id=<S1_ID> exp_id=<S2_ID>
+bash ./scripts/pemp_stage2.sh train 0 split=0 s1.id=<S1_ID>
+bash ./scripts/pemp_stage1.sh test 0 split=0 s1.id=<S1_ID> exp_id=<S2_ID>
 ```
 
+### 3. Results (ResNet-50)
+
+* PASCAL-5i
+
+|Methods | shots | split-0 | split-1 | split-2 | split-3 |   mIoU  |  bIoU  |
+|:------:|:-----:|:-------:|:-------:|:-------:|:-------:|:-------:|:------:|
+|Baseline|   1   |  45.48  |  59.97  |  51.35  |  43.31  |  50.03  |  67.58 |
+| RPMMS  |       |  53.86  |  66.45  |  52.76  |  51.31  |  56.10  |  70.32 |
+|  PEMP  |       |  55.74  |  65.88  |  54.12  |  50.34  |  56.52  |  71.41 |
+|        |       |         |         |         |         |         |        |
+|Baseline|   5   |  52.47  |  66.31  |  59.85  |  51.02  |  57.41  |  71.90 |
+| RPMMS  |       |  56.28  |  67.34  |  54.52  |  51.00  |  57.30  |    -   |
+|  PEMP  |       |  58.59  |  69.10  |  60.31  |  53.01  |  60.25  |  73.84 |
+
+* COCO-20i
 
 
-### 3. Visualization
+|Methods | shots | split-0 | split-1 | split-2 | split-3 |   mIoU  |  bIoU  |
+|:------:|:-----:|:-------:|:-------:|:-------:|:-------:|:-------:|:------:|
+| RPMMS  |   1   |  29.53  |  36.82  |  28.94  |  27.02  |  30.58  |    -   |
+|  PEMP  |       |  29.28  |  34.09  |  29.64  |  30.36  |  30.84  |  63.13 |
+| RPMMS  |   5   |  33.82  |  41.96  |  32.99  |  33.33  |  35.52  |    -   |
+|  PEMP  |       |  39.08  |  44.59  |  39.54  |  41.42  |  41.16  |  70.71 |
+
+
+### 4. Visualization
 
 We provide a simple tool for visualizing the segmentation prediction and response maps (see the paper). 
 
 ![Visualization tool](README.assets/figure-2.png)
 
-#### 3.1 Evaluate and Save Predictions
+#### 4.1 Evaluate and Save Predictions
 
 ```bash
 # With pre-trained model
@@ -150,7 +173,7 @@ bash ./scripts/pemp_stage2.sh visualize 0 s1.id=1001 exp_id=1005 data.test_n=100
 
 The prediction and response maps are saved in the directory `./http/static`. 
 
-#### 3.2 Start the Backend
+#### 4.2 Start the Backend
 
 ```bash
 # Instal flask 
@@ -164,7 +187,7 @@ python backend.py
 python backend_5shot.py
 ```
 
-#### 3.3 Start the Frontend
+#### 4.3 Start the Frontend
 
 Open the address https://localhost:17002 for browsing the results. ( https://localhost:17003 for 5-shot results)
 
